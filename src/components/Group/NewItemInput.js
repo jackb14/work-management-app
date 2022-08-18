@@ -1,10 +1,44 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
 function NewInputItem() {
+  const [newItem, setNewItem] = useState("");
+
+  // UPDATE
+  const handleNewItem = () => {
+    handleSaveItem();
+    setNewItem("");
+  };
+
+  const handleSaveItem = async () => {
+    try {
+      const fetchResponse = await fetch("http://localhost:8800/api/items", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: newItem,
+          status: "",
+        }),
+      });
+    } catch (e) {
+      return e;
+    }
+  };
+
   return (
     <>
-      <StyledNewInputItem placeholder="+ Add item" />
+      <form onSubmit={() => handleNewItem()}>
+        <StyledNewInputItem
+          type="text"
+          placeholder="+ Add item"
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+        />
+      </form>
     </>
   );
 }
