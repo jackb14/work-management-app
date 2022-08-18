@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
+import { DataContext } from "../../DataContext";
 import DeleteItem from "./DeleteItem";
 import Item from "./Item";
 import ItemSelector from "./ItemSelector";
-import NewInputItem from "./NewItemInput";
 
 function Items() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [itemData, setItemData] = useState("loading...");
+  const data = useContext(DataContext);
+
+  const [itemsData, setItemsData] = useState([]);
 
   useEffect(() => {
-    const items = async () => {
-      const res = await fetch("http://localhost:8800/api/items");
-      const data = await res.json();
-      setData(data);
-      setLoading(false);
-    };
-    items();
-  }, []);
+    setItemsData(data);
+  }, [data]);
 
   // DELETE
   const handleDelete = async (item) => {
@@ -30,8 +26,8 @@ function Items() {
         }
       );
       const currentItem = item._id;
-      const newData = data.filter((item) => item._id !== currentItem);
-      setData(newData);
+      const newData = itemsData.filter((item) => item._id !== currentItem);
+      setItemsData(newData);
     } catch (e) {
       return e;
     }
@@ -54,12 +50,12 @@ function Items() {
         }
       );
       const currentItem = item._id;
-      data.map((item) => {
+      itemsData.map((item) => {
         if (item._id === currentItem) {
           currentItem.status = value;
         }
       });
-      console.log("updated:", data);
+      console.log("updated:", itemsData);
     } catch (e) {
       return e;
     }
@@ -67,15 +63,15 @@ function Items() {
 
   // DATA OUTPUT
   let mappedData;
-  if (data.length > 0) {
-    mappedData = data.map((item) => (
+  if (itemsData.length > 0) {
+    mappedData = itemsData.map((item) => (
       <Item key={item._id}>
         <ItemFlex>
           {item.name}
           <ActionsFlex>
             <ItemSelector
               value={item.status}
-              options={["Not Started", "Working on it", "To Review"]}
+              options={["Not started", "Working on it", "To review"]}
               item={item}
               handleUpdate={handleUpdate}
             />

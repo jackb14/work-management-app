@@ -7,7 +7,7 @@ function Group() {
   return (
     <>
       <StyledGroupHeader>
-        <h3 style={{ fontWeight: "400" }}>Group title</h3>
+        <h3 style={{ fontWeight: "400" }}>Current Tasks</h3>
         <GroupHeadingFlex>
           <p style={{ marginLeft: "16px" }}>Item name</p>
           <p style={{ marginRight: "130px" }}>Status</p>

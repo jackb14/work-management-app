@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
-import GraphInner from "./GraphInner";
+import GraphColumn from "./GraphColumn";
 
 function GraphContainer({ heading }) {
   return (
     <>
       <StyledGraphContainer>
-        <h3 style={{ fontWeight: "400" }}>{heading}dd</h3>
-        <GraphInner />
-        <StyledGraphFooter>
-          <h3 style={{ fontWeight: "400" }}>280</h3>
-          <p>Operations</p>
-        </StyledGraphFooter>
+        <h3 style={{ fontWeight: "400" }}>{heading}</h3>
+        <StyledGraph>
+          <GraphColumn name="Empty" number="20" color="grey" />
+          <GraphColumn name="Not started" number="20" color="red" />
+          <GraphColumn name="Working on it" number="30" color="orange" />
+          <GraphColumn name="To review" number="70" color="green" />
+        </StyledGraph>
+        <h3 style={{ fontWeight: "400" }}>Total items: 480</h3>
       </StyledGraphContainer>
     </>
   );
@@ -27,4 +29,13 @@ const StyledGraphContainer = styled.div`
   flex: 1;
 `;
 
-const StyledGraphFooter = styled.div``;
+const StyledGraph = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background-color: ${CUSTOM_STYLES.COLORS.fadedDarkBackground};
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: ${CUSTOM_STYLES.OTHER.borderRadius};
+  height: 250px;
+`;

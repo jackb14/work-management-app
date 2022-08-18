@@ -34,4 +34,5 @@ const StyledSelect = styled.select`
   font-size: 1rem;
   padding: 8px 8px 8px 8px;
   width: 150px;
+  cursor: pointer;
 `;
