@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
-function GraphColumn({ name, number }) {
-  // total sum of all should be the 100% mark
-
-  const totalSum = number;
-  console.log(totalSum);
-
+function GraphColumn({ name, number, totalSum, color }) {
   return (
     <>
       <StyledColumnWrapper>
-        <StyledColumn height={number}></StyledColumn>
+        <StyledColumn
+          height={number > 0 ? (number / totalSum) * 100 : 0}
+          color={color}
+        ></StyledColumn>
         {name} ({number || 0})
       </StyledColumnWrapper>
     </>
@@ -20,7 +18,7 @@ function GraphColumn({ name, number }) {
 export default GraphColumn;
 
 const StyledColumn = styled.div`
-  background-color: orange;
+  background-color: ${(props) => props.color};
   height: ${(props) => props.height}%;
   width: 100%;
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius};

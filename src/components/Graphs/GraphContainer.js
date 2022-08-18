@@ -1,19 +1,54 @@
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
+import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 import GraphColumn from "./GraphColumn";
 
 function GraphContainer({ heading }) {
+  const data = useContext(DataContext);
+
+  const totalSum = data.length; // gets total sum to calculate the 100% ratio in the column component
+
+  const filterFunc = (name) => {
+    const length = data.filter((item) => item.status === name).length;
+    return length > 0 ? length : 0;
+  };
+
+  const totalEmpty = data.filter(
+    (item) => (item.status === "") | "Empty"
+  ).length;
+
   return (
     <>
       <StyledGraphContainer>
         <h3 style={{ fontWeight: "400" }}>{heading}</h3>
         <StyledGraph>
-          <GraphColumn name="Empty" number="20" color="grey" />
-          <GraphColumn name="Not started" number="20" color="red" />
-          <GraphColumn name="Working on it" number="30" color="orange" />
-          <GraphColumn name="To review" number="70" color="green" />
+          <GraphColumn
+            name="Empty"
+            number={totalEmpty}
+            totalSum={totalSum}
+            color={CUSTOM_STYLES.COLORS.grey}
+          />
+          <GraphColumn
+            name="Not started"
+            number={filterFunc("Not started")}
+            totalSum={totalSum}
+            color={CUSTOM_STYLES.COLORS.red}
+          />
+          <GraphColumn
+            name="Working on it"
+            number={filterFunc("Working on it")}
+            totalSum={totalSum}
+            color={CUSTOM_STYLES.COLORS.yellow}
+          />
+          <GraphColumn
+            name="To review"
+            number={filterFunc("To review")}
+            totalSum={totalSum}
+            color={CUSTOM_STYLES.COLORS.green}
+          />
         </StyledGraph>
-        <h3 style={{ fontWeight: "400" }}>Total items: 480</h3>
+        <h3 style={{ fontWeight: "400" }}>Total items: {totalSum}</h3>
       </StyledGraphContainer>
     </>
   );

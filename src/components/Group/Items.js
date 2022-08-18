@@ -6,8 +6,6 @@ import Item from "./Item";
 import ItemSelector from "./ItemSelector";
 
 function Items() {
-  const [loading, setLoading] = useState(true);
-  const [itemData, setItemData] = useState("loading...");
   const data = useContext(DataContext);
 
   const [itemsData, setItemsData] = useState([]);

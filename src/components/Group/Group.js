@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
-import StyledItem from "./Items";
+import Item from "./Items";
 import NewInputItem from "./NewItemInput";
 
 function Group() {
@@ -14,7 +14,7 @@ function Group() {
         </GroupHeadingFlex>
       </StyledGroupHeader>
       <StyledGroup>
-        <StyledItem />
+        <Item />
         <NewInputItem />
       </StyledGroup>
     </>

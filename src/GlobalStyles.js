@@ -22,6 +22,10 @@ export const CUSTOM_STYLES = {
     darkBackground: "#30324e",
     lightGrey: "#efefef",
     fadedDarkBackground: "#1a1b31",
+    red: "#e32b1c",
+    grey: "#b1aca2",
+    green: "#3eac53",
+    yellow: "#f2ba0d",
   },
   OTHER: {
     borderRadius: "5px",

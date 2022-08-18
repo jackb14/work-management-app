@@ -11,7 +11,6 @@ function App() {
       const res = await fetch("http://localhost:8800/api/items");
       const data = await res.json();
       setData(data);
-      // setLoading(false);
     };
     items();
   }, []);
