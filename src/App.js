@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import MainContent from "./components/MainContent";
+import SideBar from "./components/SideBar/SideBar";
+import Flex from "./components/Styles/Flex";
 import { DataContext } from "./DataContext";
 import { GlobalStyles } from "./GlobalStyles";
-import PrimaryLayout from "./layouts/PrimaryLayout";
 
 function App() {
   const [data, setData] = useState([]);
@@ -18,7 +20,11 @@ function App() {
   return (
     <>
       <DataContext.Provider value={data}>
-        <PrimaryLayout />
+        <Flex>
+          <SideBar />
+          <MainContent />
+        </Flex>
+
         <GlobalStyles />
       </DataContext.Provider>
     </>
