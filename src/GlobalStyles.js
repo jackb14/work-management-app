@@ -26,6 +26,9 @@ export const CUSTOM_STYLES = {
     grey: "#b1aca2",
     green: "#3eac53",
     yellow: "#f2ba0d",
+    fadedRed: "rgba(196, 72, 63, 80%)",
+    fadedGreen: "rgba(63, 143, 78, 80%)",
+    fadedYellow: "rgba(219, 177, 46, 80%)",
   },
   OTHER: {
     borderRadius: "5px",

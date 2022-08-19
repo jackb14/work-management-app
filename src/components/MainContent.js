@@ -10,7 +10,7 @@ function MainContent() {
     <StyledMainContent>
       <Header />
       <Board />
-      <NewGroupBtn>Create new group</NewGroupBtn>
+      {/* <NewGroupBtn>Create new group</NewGroupBtn> */}
     </StyledMainContent>
   );
 }
@@ -19,7 +19,7 @@ const StyledMainContent = styled.div`
   background-color: ${CUSTOM_STYLES.COLORS.darkestBackground};
   flex: 1;
   height: 100vh;
-  padding: 24px;
+  padding: 32px;
   overflow-y: auto;
 `;
 

@@ -5,7 +5,11 @@ function DeleteItem({ item, handleDelete }) {
     <>
       <FiX
         onClick={() => handleDelete(item)}
-        style={{ color: "red", cursor: "pointer", fontSize: "30px" }}
+        style={{
+          color: "white",
+          cursor: "pointer",
+          fontSize: "30px",
+        }}
       />
     </>
   );

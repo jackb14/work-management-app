@@ -50,14 +50,20 @@ function Board() {
         }
       );
       const currentItem = item._id;
-      itemsData.map((item) => {
-        if (item._id === currentItem) {
-          return (currentItem.status = value);
-          // setItemsData(itemsData.push(`{_id: ${item._id}, item.status: ${value}}`)); // work on function to update state with new status value which in turn updates chart
-        }
-      });
+      updateStatus(value, currentItem, item, value);
     } catch (e) {
       return e;
+    }
+  };
+
+  // Function to accomodate updating state with the new status value
+  const updateStatus = (status, currentItem, item, value) => {
+    if (value === status) {
+      const newData = itemsData.filter((item) => item._id !== currentItem);
+      setItemsData([
+        ...newData,
+        { _id: item._id, name: item.name, status: status },
+      ]);
     }
   };
 
@@ -65,7 +71,7 @@ function Board() {
   let mappedData;
   if (itemsData.length > 0) {
     mappedData = itemsData.map((item) => (
-      <StyledItem key={item._id}>
+      <StyledItem key={item._id} color={item.status}>
         <ItemFlex>
           {item.name}
           <ActionsFlex>
@@ -88,7 +94,12 @@ function Board() {
         <Graph />
       </NewDataContext.Provider>
       <StyledGroupHeader>
-        <h3 style={{ fontWeight: "400" }}>Current Tasks</h3>
+        <StyledTopHeaderFlex>
+          <h3 style={{ fontWeight: "400" }}>Current Tasks</h3>
+          <p>
+            <b>Sorted by:</b> Oldest to Newest
+          </p>
+        </StyledTopHeaderFlex>
         <GroupHeadingFlex>
           <p style={{ marginLeft: "16px" }}>Item name</p>
           <p style={{ marginRight: "130px" }}>Status</p>
@@ -109,9 +120,16 @@ const StyledGroupHeader = styled.div`
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius}
     ${CUSTOM_STYLES.OTHER.borderRadius} 0 0;
 `;
+
+const StyledTopHeaderFlex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const StyledGroup = styled.div`
   background-color: ${CUSTOM_STYLES.COLORS.darkBackground};
-  border-left: 5px solid orange;
+  border-left: 4px solid ${CUSTOM_STYLES.COLORS.lightGrey};
   border-radius: 0 0 ${CUSTOM_STYLES.OTHER.borderRadius}
     ${CUSTOM_STYLES.OTHER.borderRadius};
   overflow: hidden;
@@ -127,7 +145,7 @@ const GroupHeadingFlex = styled.div`
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius}
     ${CUSTOM_STYLES.OTHER.borderRadius} 0 0;
   padding: 16px 8px;
-  border-bottom: 1px solid ${CUSTOM_STYLES.COLORS.lightGrey};
+  border-bottom: 4px solid ${CUSTOM_STYLES.COLORS.lightGrey};
 `;
 
 const ItemFlex = styled.div`
@@ -145,4 +163,12 @@ const ActionsFlex = styled.div`
 const StyledItem = styled.div`
   padding: 16px;
   border-bottom: 1px solid ${CUSTOM_STYLES.COLORS.lightGrey};
+  background-color: ${(props) =>
+    props.color === "Not started"
+      ? CUSTOM_STYLES.COLORS.fadedRed
+      : props.color === "Working on it"
+      ? CUSTOM_STYLES.COLORS.fadedYellow
+      : props.color === "To review"
+      ? CUSTOM_STYLES.COLORS.fadedGreen
+      : CUSTOM_STYLES.COLORS.darkBackground};
 `;
