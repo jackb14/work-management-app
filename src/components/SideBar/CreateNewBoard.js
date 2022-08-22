@@ -8,7 +8,7 @@ function CreateNewBoard() {
   const [newBoardName, setNewBoardName] = useState("");
   const [inputDisplay, setInputDisplay] = useState("none");
 
-  const urlBoardName = newBoardName.replace(" ", "-");
+  const urlBoardName = newBoardName.replace(" ", "-").toLowerCase().trim();
 
   const submitAction = () => {
     setNewBoardName("");
