@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import GraphContainer from "./GraphContainer";
 
-function Graph() {
+function Graph({ boardItems, title }) {
   return (
     <>
-      <h3 style={{ fontWeight: "400", marginTop: "32px" }}>Board Summary</h3>
+      <h3 style={{ fontWeight: "400", marginTop: "32px" }}>{title}</h3>
       <StyledGraphWrapper>
-        <GraphContainer heading="Status Overview" />
+        <GraphContainer heading="Status Overview" boardItems={boardItems} />
       </StyledGraphWrapper>
     </>
   );

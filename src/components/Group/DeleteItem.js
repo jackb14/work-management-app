@@ -8,7 +8,7 @@ function DeleteItem({ item, handleDelete }) {
         style={{
           color: "white",
           cursor: "pointer",
-          fontSize: "30px",
+          fontSize: "20px",
         }}
       />
     </>

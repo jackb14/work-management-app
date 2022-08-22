@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import MainContent from "./components/MainContent";
-import SideBar from "./components/SideBar/SideBar";
-import Flex from "./components/Styles/Flex";
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "./components/MainLayout";
 import { DataContext } from "./DataContext";
 import { GlobalStyles } from "./GlobalStyles";
+import Home from "./components/Home/Home";
 
 function App() {
   const [data, setData] = useState([]);
@@ -20,11 +20,11 @@ function App() {
   return (
     <>
       <DataContext.Provider value={data}>
-        <Flex>
-          <SideBar />
-          <MainContent />
-        </Flex>
-
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/board/:name" element={<MainLayout />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
         <GlobalStyles />
       </DataContext.Provider>
     </>

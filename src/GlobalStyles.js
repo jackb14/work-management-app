@@ -14,6 +14,10 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Roboto', 'arial', sans-serif;
     color: white;
   }
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 export const CUSTOM_STYLES = {
@@ -29,6 +33,7 @@ export const CUSTOM_STYLES = {
     fadedRed: "rgba(196, 72, 63, 80%)",
     fadedGreen: "rgba(63, 143, 78, 80%)",
     fadedYellow: "rgba(219, 177, 46, 80%)",
+    royalBlue: "#214cce",
   },
   OTHER: {
     borderRadius: "5px",

@@ -1,21 +1,16 @@
-import { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { DataContext, NewDataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 import GraphColumn from "./GraphColumn";
 
-function GraphContainer({ heading }) {
-  const data = useContext(DataContext);
-  const newData = useContext(NewDataContext);
-
-  const totalSum = newData.length; // gets total sum to calculate the 100% ratio in the column component
+function GraphContainer({ heading, boardItems }) {
+  const totalSum = boardItems.length; // gets total sum to calculate the 100% ratio in the column component
 
   const filterFunc = (name) => {
-    const length = newData.filter((item) => item.status === name).length;
+    const length = boardItems.filter((item) => item.status === name).length;
     return length > 0 ? length : 0;
   };
 
-  const totalEmpty = newData.filter(
+  const totalEmpty = boardItems.filter(
     (item) => (item.status === "") | "Empty"
   ).length;
 

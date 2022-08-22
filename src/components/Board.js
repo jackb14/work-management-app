@@ -1,3 +1,4 @@
+import Header from "./Header";
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../GlobalStyles";
 import NewInputItem from "./Group/NewItemInput";
@@ -7,6 +8,7 @@ import { DataContext } from "../DataContext";
 import ItemSelector from "./Group/ItemSelector";
 import DeleteItem from "./Group/DeleteItem";
 import { NewDataContext } from "../DataContext";
+import { useParams } from "react-router-dom";
 
 function Board() {
   const data = useContext(DataContext);
@@ -16,15 +18,34 @@ function Board() {
     setItemsData(data);
   }, [data]);
 
+  const { name } = useParams();
+
+  const boardName = name.replace("-", " ");
+
+  const hasBoardItem = itemsData.map((item) => {
+    if (item.board) {
+      return item;
+    } else {
+      return 0;
+    }
+  });
+
+  const boardItems = hasBoardItem
+    .map((item) => {
+      if (item.board === boardName) {
+        return item;
+      } else {
+        return 0;
+      }
+    })
+    .filter((item) => item !== 0);
+
   // DELETE
   const handleDelete = async (item) => {
     try {
-      const fetchResponse = await fetch(
-        `http://localhost:8800/api/items/${item._id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      await fetch(`http://localhost:8800/api/items/${item._id}`, {
+        method: "DELETE",
+      });
       const currentItem = item._id;
       const newData = itemsData.filter((item) => item._id !== currentItem);
       setItemsData(newData);
@@ -36,33 +57,31 @@ function Board() {
   // UPDATE
   const handleUpdate = async (value, item) => {
     try {
-      const fetchResponse = await fetch(
-        `http://localhost:8800/api/items/${item._id}`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            status: value,
-          }),
-        }
-      );
+      await fetch(`http://localhost:8800/api/items/${item._id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: value,
+          board: boardName,
+        }),
+      });
       const currentItem = item._id;
-      updateStatus(value, currentItem, item, value);
+      updateStatus(value, currentItem, item, value, boardName);
     } catch (e) {
       return e;
     }
   };
 
   // Function to accomodate updating state with the new status value
-  const updateStatus = (status, currentItem, item, value) => {
+  const updateStatus = (status, currentItem, item, value, boardName) => {
     if (value === status) {
       const newData = itemsData.filter((item) => item._id !== currentItem);
       setItemsData([
         ...newData,
-        { _id: item._id, name: item.name, status: status },
+        { _id: item._id, name: item.name, status: status, board: boardName },
       ]);
     }
   };
@@ -70,32 +89,35 @@ function Board() {
   // DATA OUTPUT
   let mappedData;
   if (itemsData.length > 0) {
-    mappedData = itemsData.map((item) => (
-      <StyledItem key={item._id} color={item.status}>
-        <ItemFlex>
-          {item.name}
-          <ActionsFlex>
-            <ItemSelector
-              value={item.status}
-              options={["Not started", "Working on it", "To review"]}
-              item={item}
-              handleUpdate={handleUpdate}
-            />
-            <DeleteItem item={item} handleDelete={handleDelete} />
-          </ActionsFlex>
-        </ItemFlex>
-      </StyledItem>
-    ));
+    mappedData = boardItems.map((item) => {
+      return (
+        <StyledItem key={item._id} color={item.status}>
+          <ItemFlex>
+            {item.name}
+            <ActionsFlex>
+              <ItemSelector
+                value={item.status}
+                options={["Not started", "Working on it", "To review"]}
+                item={item}
+                handleUpdate={handleUpdate}
+              />
+              <DeleteItem item={item} handleDelete={handleDelete} />
+            </ActionsFlex>
+          </ItemFlex>
+        </StyledItem>
+      );
+    });
   }
 
   return (
     <>
       <NewDataContext.Provider value={itemsData}>
-        <Graph />
+        <Header>{boardName}</Header>
+        <Graph boardItems={boardItems} title="Board Summary" />
       </NewDataContext.Provider>
       <StyledGroupHeader>
         <StyledTopHeaderFlex>
-          <h3 style={{ fontWeight: "400" }}>Current Tasks</h3>
+          <h3 style={{ fontWeight: "400" }}>Items</h3>
           <p>
             <b>Sorted by:</b> Oldest to Newest
           </p>
@@ -107,7 +129,7 @@ function Board() {
       </StyledGroupHeader>
       <StyledGroup>
         {mappedData}
-        <NewInputItem />
+        <NewInputItem boardName={boardName} />
       </StyledGroup>
     </>
   );
@@ -145,7 +167,6 @@ const GroupHeadingFlex = styled.div`
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius}
     ${CUSTOM_STYLES.OTHER.borderRadius} 0 0;
   padding: 16px 8px;
-  border-bottom: 4px solid ${CUSTOM_STYLES.COLORS.lightGrey};
 `;
 
 const ItemFlex = styled.div`
@@ -161,7 +182,7 @@ const ActionsFlex = styled.div`
 `;
 
 const StyledItem = styled.div`
-  padding: 16px;
+  padding: 14px;
   border-bottom: 1px solid ${CUSTOM_STYLES.COLORS.lightGrey};
   background-color: ${(props) =>
     props.color === "Not started"

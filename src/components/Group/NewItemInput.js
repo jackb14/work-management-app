@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
-function NewInputItem() {
+function NewInputItem({ boardName }) {
   const [newItem, setNewItem] = useState("");
 
   // UPDATE
@@ -13,7 +13,7 @@ function NewInputItem() {
 
   const handleSaveItem = async () => {
     try {
-      const fetchResponse = await fetch("http://localhost:8800/api/items", {
+      await fetch("http://localhost:8800/api/items", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -22,8 +22,10 @@ function NewInputItem() {
         body: JSON.stringify({
           name: newItem,
           status: "",
+          board: boardName,
         }),
       });
+      console.log("done");
     } catch (e) {
       return e;
     }
