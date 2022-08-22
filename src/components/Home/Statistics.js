@@ -4,7 +4,7 @@ import { DataContext } from "../../DataContext";
 import Graph from "../Graphs/Graph";
 
 function Statistics() {
-  const data = useContext(DataContext);
+  const { data, setData } = useContext(DataContext);
   return (
     <>
       <OuterWrapper>

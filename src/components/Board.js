@@ -7,22 +7,18 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../DataContext";
 import ItemSelector from "./Group/ItemSelector";
 import DeleteItem from "./Group/DeleteItem";
-import { NewDataContext } from "../DataContext";
 import { useParams } from "react-router-dom";
 
 function Board() {
-  const data = useContext(DataContext);
-  const [itemsData, setItemsData] = useState([]); // updated state to allow the list to update without refresh
+  const { data, setData } = useContext(DataContext);
 
-  useEffect(() => {
-    setItemsData(data);
-  }, [data]);
+  console.log(data);
 
   const { name } = useParams();
 
   const boardName = name.replace("-", " ");
 
-  const hasBoardItem = itemsData.map((item) => {
+  const hasBoardItem = data.map((item) => {
     if (item.board) {
       return item;
     } else {
@@ -47,8 +43,8 @@ function Board() {
         method: "DELETE",
       });
       const currentItem = item._id;
-      const newData = itemsData.filter((item) => item._id !== currentItem);
-      setItemsData(newData);
+      const newData = data.filter((item) => item._id !== currentItem);
+      setData(newData);
     } catch (e) {
       return e;
     }
@@ -78,8 +74,8 @@ function Board() {
   // Function to accomodate updating state with the new status value
   const updateStatus = (status, currentItem, item, value, boardName) => {
     if (value === status) {
-      const newData = itemsData.filter((item) => item._id !== currentItem);
-      setItemsData([
+      const newData = data.filter((item) => item._id !== currentItem);
+      setData([
         ...newData,
         { _id: item._id, name: item.name, status: status, board: boardName },
       ]);
@@ -88,7 +84,7 @@ function Board() {
 
   // DATA OUTPUT
   let mappedData;
-  if (itemsData.length > 0) {
+  if (data.length > 0) {
     mappedData = boardItems.map((item) => {
       return (
         <StyledItem key={item._id} color={item.status}>
@@ -111,10 +107,8 @@ function Board() {
 
   return (
     <>
-      <NewDataContext.Provider value={itemsData}>
-        <Header>{boardName}</Header>
-        <Graph boardItems={boardItems} title="Board Summary" />
-      </NewDataContext.Provider>
+      <Header>{boardName}</Header>
+      <Graph boardItems={boardItems} title="Board Summary" />
       <StyledGroupHeader>
         <StyledTopHeaderFlex>
           <h3 style={{ fontWeight: "400" }}>Items</h3>

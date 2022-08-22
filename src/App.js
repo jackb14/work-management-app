@@ -17,9 +17,11 @@ function App() {
     items();
   }, []);
 
+  const value = { data, setData };
+
   return (
     <>
-      <DataContext.Provider value={data}>
+      <DataContext.Provider value={value}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/board/:name" element={<MainLayout />} />

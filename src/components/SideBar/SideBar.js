@@ -6,7 +6,7 @@ import { CUSTOM_STYLES } from "../../GlobalStyles";
 import CreateNewBoard from "./CreateNewBoard";
 
 function SideBar() {
-  const data = useContext(DataContext);
+  const { data, setData } = useContext(DataContext);
 
   const getBoardNames = data.map((item) => item.board);
   const filteredBoardNames = [...new Set(getBoardNames)].filter((item) => item);
@@ -25,7 +25,7 @@ function SideBar() {
 
   return (
     <StyledSideBar>
-      <h2 style={{ marginBottom: "24px" }}>Boards</h2>
+      <h2 style={{ margin: "0px 8px", padding: "8px" }}>Boards</h2>
       <SideBarList>
         <div>
           <Link to="/">
