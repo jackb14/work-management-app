@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CUSTOM_STYLES } from "../GlobalStyles";
 import NewInputItem from "./Group/NewItemInput";
 import Graph from "./Graphs/Graph";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { DataContext } from "../DataContext";
 import ItemSelector from "./Group/ItemSelector";
 import DeleteItem from "./Group/DeleteItem";

@@ -8,7 +8,7 @@ import CreateNewBoard from "./CreateNewBoard";
 import icon from "../../assets/icon-arrow-left.svg";
 
 function SideBar() {
-  const { data, setData } = useContext(DataContext);
+  const { data } = useContext(DataContext);
   const [sidebarWidth, setSidebarWidth] = useState(
     CUSTOM_SIDEBAR_STYLES.regWidth
   );
