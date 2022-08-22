@@ -9,7 +9,7 @@ function GraphColumn({ name, number, totalSum, color }) {
           height={number > 0 ? (number / totalSum) * 100 : 0}
           color={color}
         ></StyledColumn>
-        {name} ({number || 0})
+        <StyledColumnName>{name}</StyledColumnName> {number || 0}
       </StyledColumnWrapper>
     </>
   );
@@ -22,6 +22,7 @@ const StyledColumn = styled.div`
   height: ${(props) => props.height}%;
   width: 100%;
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius};
+  min-width: 70px;
 `;
 
 const StyledColumnWrapper = styled.div`
@@ -33,4 +34,10 @@ const StyledColumnWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+`;
+
+const StyledColumnName = styled.span`
+  @media (max-width: 950px) {
+    display: none;
+  }
 `;

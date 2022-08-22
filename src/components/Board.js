@@ -11,9 +11,6 @@ import { useParams } from "react-router-dom";
 
 function Board() {
   const { data, setData } = useContext(DataContext);
-
-  console.log(data);
-
   const { name } = useParams();
 
   const boardName = name.replace("-", " ");
@@ -141,6 +138,11 @@ const StyledTopHeaderFlex = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 `;
 
 const StyledGroup = styled.div`
@@ -167,12 +169,21 @@ const ItemFlex = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 12px;
+  }
 `;
 
 const ActionsFlex = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  @media (max-width: 768px) {
+    align-items: center;
+    margin: 12px 0;
+    justify-content: space-between;
+  }
 `;
 
 const StyledItem = styled.div`

@@ -69,4 +69,7 @@ const StyledGraph = styled.div`
   margin: 16px 0;
   border-radius: ${CUSTOM_STYLES.OTHER.borderRadius};
   height: 250px;
+  @media (max-width: 768px) {
+    overflow: auto;
+  }
 `;

@@ -22,4 +22,8 @@ const StyledButton = styled.button`
   font-size: 0.9rem;
   cursor: pointer;
   width: ${(props) => props.width};
+
+  &:hover {
+    opacity: 85%;
+  }
 `;

@@ -15,8 +15,5 @@ function Graph({ boardItems, title }) {
 export default Graph;
 
 const StyledGraphWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
   margin-bottom: 32px;
 `;

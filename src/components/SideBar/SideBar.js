@@ -1,12 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
+import Button from "../Button";
 import CreateNewBoard from "./CreateNewBoard";
+import icon from "../../assets/icon-arrow-left.svg";
 
 function SideBar() {
   const { data, setData } = useContext(DataContext);
+  const [sidebarWidth, setSidebarWidth] = useState(
+    CUSTOM_SIDEBAR_STYLES.regWidth
+  );
+  const [sidebarDisplay, setSidebarDisplay] = useState("block");
+
+  const handleSidebarCollapse = () => {
+    if (sidebarWidth === CUSTOM_SIDEBAR_STYLES.regWidth) {
+      setSidebarWidth(CUSTOM_SIDEBAR_STYLES.shrunkWidth);
+      setSidebarDisplay("none");
+    } else {
+      setSidebarWidth(CUSTOM_SIDEBAR_STYLES.regWidth);
+      setSidebarDisplay("block");
+    }
+  };
 
   const getBoardNames = data.map((item) => item.board);
   const filteredBoardNames = [...new Set(getBoardNames)].filter((item) => item);
@@ -24,19 +40,34 @@ function SideBar() {
   ));
 
   return (
-    <StyledSideBar>
-      <h2 style={{ margin: "0px 8px", padding: "8px" }}>Boards</h2>
-      <SideBarList>
-        <div>
-          <Link to="/">
-            <SideBarListItem>Dashboard</SideBarListItem>
-          </Link>
-          {sidebarBoards}
+    <StyledSideBar width={sidebarWidth}>
+      <StyledHeader>
+        <SidebarHideWrapper sidebarDisplay={sidebarDisplay}>
+          <h2 style={{ margin: "0px 8px", padding: "8px" }}>Boards</h2>
+        </SidebarHideWrapper>
+        <div onClick={() => handleSidebarCollapse()}>
+          <Button color={CUSTOM_STYLES.COLORS.darkestBackground}>
+            {sidebarDisplay === "block" ? (
+              <img src={icon} alt="icon" />
+            ) : (
+              <RotatedImg src={icon} alt="icon" />
+            )}
+          </Button>
         </div>
-        <OuterWrapper>
-          <CreateNewBoard />
-        </OuterWrapper>
-      </SideBarList>
+      </StyledHeader>
+      <SidebarHideWrapper sidebarDisplay={sidebarDisplay}>
+        <SideBarList>
+          <div>
+            <Link to="/">
+              <SideBarListItem>Dashboard</SideBarListItem>
+            </Link>
+            {sidebarBoards}
+          </div>
+          <OuterWrapper>
+            <CreateNewBoard />
+          </OuterWrapper>
+        </SideBarList>
+      </SidebarHideWrapper>
     </StyledSideBar>
   );
 }
@@ -45,7 +76,7 @@ export default SideBar;
 
 const StyledSideBar = styled.div`
   background-color: ${CUSTOM_STYLES.COLORS.darkBackground};
-  flex: 0 1 300px;
+  flex: ${(props) => props.width};
   padding: 18px;
   text-transform: capitalize;
   overflow: auto;
@@ -71,4 +102,23 @@ const SideBarListItem = styled.li`
 const OuterWrapper = styled.div`
   padding: 8px;
   margin: 8px;
+`;
+
+const StyledHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CUSTOM_SIDEBAR_STYLES = {
+  regWidth: "0 1 300px",
+  shrunkWidth: "0 1 75px",
+};
+
+const SidebarHideWrapper = styled.div`
+  display: ${(props) => props.sidebarDisplay};
+`;
+
+const RotatedImg = styled.img`
+  transform: rotate(180deg);
 `;

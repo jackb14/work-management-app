@@ -1,16 +1,24 @@
+import styled from "styled-components";
 import MainContent from "./MainContent";
 import SideBar from "./SideBar/SideBar";
-import Flex from "./Styles/Flex";
 
 function MainLayout() {
   return (
     <>
-      <Flex>
+      <StyledWrapper>
         <SideBar />
         <MainContent />
-      </Flex>
+      </StyledWrapper>
     </>
   );
 }
 
 export default MainLayout;
+
+const StyledWrapper = styled.div`
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: 100vh;
+  }
+`;

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 import Header from "../Header";
 import SideBar from "../SideBar/SideBar";
-import Flex from "../Styles/Flex";
 import Statistics from "./Statistics";
 
 function Home() {
@@ -22,16 +21,16 @@ function Home() {
   const timeOfDay = checkTime();
 
   return (
-    <Flex>
+    <FlexWrapper>
       <SideBar />
       <StyledWrapper>
         <Header>{timeOfDay ? "Good " + timeOfDay + "!" : "Hello!"}</Header>
         <h3 style={{ fontWeight: 400 }}>
-          Visit a board on the sidebar to view your items.
+          Open a board on the sidebar to view your items.
         </h3>
         <Statistics />
       </StyledWrapper>
-    </Flex>
+    </FlexWrapper>
   );
 }
 
@@ -43,4 +42,12 @@ const StyledWrapper = styled.div`
   height: 100vh;
   padding: 32px;
   overflow-y: auto;
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: 100vh;
+  }
 `;
