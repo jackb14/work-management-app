@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
 function NewInputItem({ boardName }) {
-  const { data } = useContext(DataContext);
   const [newItem, setNewItem] = useState("");
 
   // UPDATE
@@ -28,7 +26,7 @@ function NewInputItem({ boardName }) {
           status: "",
         }),
       });
-      window.location.reload();
+      window.location.reload(); // reloads the page to display the new data
     } catch (e) {
       return e;
     }
