@@ -10,6 +10,7 @@ function ItemSelector({ options, handleUpdate, item }) {
         </option>
       );
     }
+    return null;
   });
 
   return (

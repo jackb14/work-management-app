@@ -13,7 +13,7 @@ function Home() {
       return "morning";
     } else if (time > 120 && time < 170) {
       return "afternoon";
-    } else if (time > 170 < 240) {
+    } else if (time > 170 && time < 240) {
       return "evening";
     }
   };
