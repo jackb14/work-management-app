@@ -4,11 +4,12 @@ import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
 function NewInputItem({ boardName }) {
-  const { data } = useContext(DataContext);
+  const { data, setData } = useContext(DataContext);
   const [newItem, setNewItem] = useState("");
 
   // UPDATE
-  const handleNewItem = () => {
+  const handleNewItem = (e) => {
+    e.preventDefault();
     handleSaveItem();
     console.log(data);
     setNewItem("");
@@ -24,17 +25,18 @@ function NewInputItem({ boardName }) {
         },
         body: JSON.stringify({
           name: newItem,
-          status: "",
           board: boardName,
+          status: "",
         }),
       });
+      window.location.reload();
     } catch (e) {
       return e;
     }
   };
   return (
     <>
-      <form onSubmit={() => handleNewItem()}>
+      <form onSubmit={(e) => handleNewItem(e)}>
         <StyledNewInputItem
           type="text"
           placeholder="+ Add item"
