@@ -36,9 +36,12 @@ function Board() {
   // DELETE
   const handleDelete = async (item) => {
     try {
-      await fetch(`http://localhost:8800/api/items/${item._id}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://work-management-app.herokuapp.com/api/items/${item._id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const currentItem = item._id;
       const newData = data.filter((item) => item._id !== currentItem);
       setData(newData);
@@ -50,17 +53,20 @@ function Board() {
   // UPDATE
   const handleUpdate = async (value, item) => {
     try {
-      await fetch(`http://localhost:8800/api/items/${item._id}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          status: value,
-          board: boardName,
-        }),
-      });
+      await fetch(
+        `https://work-management-app.herokuapp.com/api/items/${item._id}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: value,
+            board: boardName,
+          }),
+        }
+      );
       const currentItem = item._id;
       updateStatus(value, currentItem, item, value, boardName);
     } catch (e) {

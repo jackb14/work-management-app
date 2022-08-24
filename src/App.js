@@ -10,7 +10,9 @@ function App() {
 
   useEffect(() => {
     const items = async () => {
-      const res = await fetch("http://localhost:8800/api/items");
+      const res = await fetch(
+        "https://work-management-app.herokuapp.com/api/items"
+      );
       const data = await res.json();
       setData(data);
     };

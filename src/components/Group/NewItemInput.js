@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
 function NewInputItem({ boardName }) {
+  const { data } = useContext(DataContext);
   const [newItem, setNewItem] = useState("");
 
   // UPDATE
   const handleNewItem = () => {
     handleSaveItem();
+    console.log(data);
     setNewItem("");
   };
 
   const handleSaveItem = async () => {
     try {
-      await fetch("http://localhost:8800/api/items", {
+      await fetch("https://work-management-app.herokuapp.com/api/items", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -25,12 +28,10 @@ function NewInputItem({ boardName }) {
           board: boardName,
         }),
       });
-      console.log("done");
     } catch (e) {
       return e;
     }
   };
-
   return (
     <>
       <form onSubmit={() => handleNewItem()}>
