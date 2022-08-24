@@ -4,14 +4,13 @@ import { DataContext } from "../../DataContext";
 import { CUSTOM_STYLES } from "../../GlobalStyles";
 
 function NewInputItem({ boardName }) {
-  const { data, setData } = useContext(DataContext);
+  const { data } = useContext(DataContext);
   const [newItem, setNewItem] = useState("");
 
   // UPDATE
   const handleNewItem = (e) => {
     e.preventDefault();
     handleSaveItem();
-    console.log(data);
     setNewItem("");
   };
 
